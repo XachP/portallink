@@ -1,22 +1,48 @@
 name: ci
 on: [push, pull_request]
+
+# The repo is published by file upload, so lib/forge-std (a git submodule) and the
+# executable bit on scripts/*.sh are not in the tree. CI fetches forge-std itself at
+# the exact pinned tag and calls the scripts through bash.
+env:
+  FORGE_STD_TAG: v1.9.6        # commit 3b20d60d14b343ee4f908cb8079495c07f5e8981
+  FOUNDRY_VERSION: v1.8.6      # same forge/anvil used to build + deploy locally
+
 jobs:
   contracts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with: { submodules: recursive }
+      - name: Install forge-std (pinned)
+        run: |
+          if [ ! -f lib/forge-std/src/Test.sol ]; then
+            rm -rf lib/forge-std
+            git -c advice.detachedHead=false clone --quiet --depth 1 --branch "$FORGE_STD_TAG" https://github.com/foundry-rs/forge-std lib/forge-std
+          fi
       - uses: foundry-rs/foundry-toolchain@v1
+        with: { version: "${{ env.FOUNDRY_VERSION }}" }
       - run: forge build --sizes
       - run: forge test -vv
+
   relayer:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with: { submodules: recursive }
+      - name: Install forge-std (pinned)
+        run: |
+          if [ ! -f lib/forge-std/src/Test.sol ]; then
+            rm -rf lib/forge-std
+            git -c advice.detachedHead=false clone --quiet --depth 1 --branch "$FORGE_STD_TAG" https://github.com/foundry-rs/forge-std lib/forge-std
+          fi
       - uses: foundry-rs/foundry-toolchain@v1
+        with: { version: "${{ env.FOUNDRY_VERSION }}" }
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: relayer/package-lock.json
       - run: forge build
       - run: cd relayer && npm ci && npm test
-      - run: ./scripts/local-e2e.sh
+      - run: bash scripts/local-e2e.sh
