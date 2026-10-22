@@ -1,0 +1,28 @@
+{
+  "network": "mezo-testnet",
+  "chainId": 31611,
+  "native": "BTC",
+  "gateway": "0xA86c25550eb58B6c7FB3cd4350CEBFd0FA9801FB",
+  "wrapped": "0x0B4a82bCD88FA31cB71E895290251f855f6ABbfc",
+  "wrappedSymbol": "wPOT",
+  "wrappedOriginChainId": 420420777,
+  "remote": "portaldot-testnet",
+  "attesters": [
+    "0x6BCDEAA68ed450F62cc8D5Ee1D6Cc392Cbf3e786",
+    "0xf6872c041c44aC7Ea58cedA84396d097Af110D51",
+    "0x106989335065742045b52709E156f5da8AC893be"
+  ],
+  "threshold": 2,
+  "admin": "0xFeEde29e521cd2ebbb31AbA13c1b145090b6c4a7",
+  "guardian": "0xFeEde29e521cd2ebbb31AbA13c1b145090b6c4a7",
+  "block": 16290884,
+  "txs": {
+    "wrappedToken": "0x46ab401fef8047b749ceffb5eb0dd73cbbb720ddaecf1746d90996aee5ead078",
+    "gateway": "0x23d139789ec5ada9186c392f0f785e8848e29a20ddb65aa66061aa896644714f",
+    "bindGateway": "0xd5a950e9f3dfc01c72414cc9f733d9480c9bf71acb56fb6b80997050497fc9b6",
+    "wrappedTokenBlock": 16290884
+  },
+  "cost": "0.000000000359842404",
+  "deployedAt": "2026-10-22T02:43:53.371Z",
+  "links": {}
+}
