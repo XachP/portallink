@@ -1,0 +1,71 @@
+{
+  "transfers": [
+    {
+      "id": "0x9862db1325c1d86860af817560d06d404fc497824a1cfcbdf9b4de9e72719c9b",
+      "kind": "NativeLocked",
+      "src": "local-mezo",
+      "dst": "local-portaldot",
+      "nonce": 2,
+      "sender": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "recipient": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "amount": "5000000000000000",
+      "asset": "BTC",
+      "srcTx": "0x9df122d3399ee50f91094fa68097f3295a9865b57e2c916445165fbe4d3e36ff",
+      "srcBlock": 30,
+      "srcTime": 1792637013,
+      "status": "delivered",
+      "dstTx": "0x37ecfaf68894e74aa00b6ebaa37153ca1173796777789b561e2e2e3609fad96a",
+      "dstBlock": 31,
+      "attestedBy": [
+        "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
+        "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+      ]
+    },
+    {
+      "id": "0x40b05ead2c85b8028336ed7ad315b9373e3570f9799dc2d5139a8c978b6fff31",
+      "kind": "WrappedBurned",
+      "src": "local-mezo",
+      "dst": "local-portaldot",
+      "nonce": 1,
+      "sender": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "recipient": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "amount": "10000000000000000000",
+      "asset": "tPOT",
+      "srcTx": "0x901715fd1d51f487e35cf6c8a2908d264559818ee9d15c9e863cedf8509a33d2",
+      "srcBlock": 26,
+      "srcTime": 1792637009,
+      "status": "delivered",
+      "dstTx": "0x330ad120f60364fe74cdda9553e083e034b514cd1c990e8537977a14f544e47c",
+      "dstBlock": 27,
+      "attestedBy": [
+        "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
+        "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+      ]
+    },
+    {
+      "id": "0xb8c4a65be9d7c5f5355cb81c90773c6c6b29993b1fb537181c6f44d0ab6754f9",
+      "kind": "NativeLocked",
+      "src": "local-portaldot",
+      "dst": "local-mezo",
+      "nonce": 1,
+      "sender": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "recipient": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "amount": "25000000000000000000",
+      "asset": "tPOT",
+      "srcTx": "0xdf1b5ac4bd4e754d56f9ac64a4b43db15325035a90ab8fd2cdfe366f6353cb66",
+      "srcBlock": 20,
+      "srcTime": 1792637003,
+      "status": "delivered",
+      "dstTx": "0x2f84cb0a60f786a20174795ed56e5879dc8f3ae16c2f24559b31f4dedf6d9222",
+      "dstBlock": 21,
+      "attestedBy": [
+        "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955",
+        "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+      ]
+    }
+  ],
+  "updated": "2026-10-22T02:43:36.397Z"
+}
