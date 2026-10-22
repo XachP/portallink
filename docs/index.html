@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PortalLink · Portaldot ⇄ Mezo bridge</title>
+<meta name="description" content="Verifiable 2-of-3 attested lock/mint bridge between Portaldot V3 (pallet-revive) and Mezo testnet.">
+<link rel="icon" href="logo.svg">
+<style>
+:root{--bg:#0b0d17;--panel:#131729;--line:#262b45;--txt:#e7e9f5;--mut:#8f94b3;--pot:#e6007a;--btc:#f7931a;--ok:#27c281;--warn:#f5b301;--bad:#ff5c5c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#2a0f2e 0,transparent 60%),radial-gradient(900px 500px at 110% 0,#2b1d06 0,transparent 55%),var(--bg);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:#9fb4ff}header{max-width:1120px;margin:0 auto;padding:28px 20px 8px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header img{width:44px;height:44px}h1{font-size:24px;margin:0}header p{margin:2px 0 0;color:var(--mut)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;border:1px solid var(--line);color:var(--mut)}
+main{max-width:1120px;margin:0 auto;padding:12px 20px 60px;display:grid;gap:16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h2{margin:0 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.chain h3{margin:0;font-size:18px;display:flex;align-items:center;gap:8px}.dot{width:10px;height:10px;border-radius:50%}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:4px 10px;margin-top:10px;font-size:14px}.kv div:nth-child(odd){color:var(--mut)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;word-break:break-all}
+.big{font-size:22px;font-weight:600}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.route{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}.route:last-child{border:0}
+.bar{height:8px;background:#20253d;border-radius:6px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),#7ee2b8)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:500}
+.st{padding:2px 8px;border-radius:6px;font-size:12px}.st.delivered{background:#123d2c;color:var(--ok)}.st.pending{background:#3d3212;color:var(--warn)}.st.failed{background:#3d1717;color:var(--bad)}
+form{display:grid;gap:8px}input,select,button{font:inherit;padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:#0e1122;color:var(--txt)}
+button{background:linear-gradient(90deg,var(--pot),#a0005a);border:0;font-weight:600;cursor:pointer}button.alt{background:#20253d}button:disabled{opacity:.5;cursor:not-allowed}
+.flow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--mut)}.flow b{color:var(--txt);font-weight:500;background:#1b2036;padding:3px 8px;border-radius:7px}
+footer{max-width:1120px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:13px}#msg{min-height:20px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <img src="logo.svg" alt="">
+  <div><h1>PortalLink</h1><p>Verifiable lock/mint bridge · Portaldot V3 (pallet-revive) ⇄ Mezo testnet · 2-of-3 attested</p></div>
+  <span class="pill" id="updated">loading…</span>
+</header>
+<main>
+  <div class="card"><h2>How a transfer moves</h2>
+    <div class="flow"><b>lockNative() on source</b>→<b>TransferSent event</b>→<b>each attester re-reads the log from its own RPC</b>→<b>2 of 3 EIP-712 signatures</b>→<b>anyone relays receiveTransfer()</b>→<b>mint wrapped / release escrow</b></div>
+  </div>
+  <div class="grid" id="chains"></div>
+  <div class="grid">
+    <div class="card"><h2>Solvency (live)</h2><div id="solvency">checking…</div></div>
+    <div class="card"><h2>Bridge from your wallet</h2>
+      <form id="f" onsubmit="return false">
+        <select id="dir"></select>
+        <input id="amt" type="number" min="0" step="any" placeholder="amount">
+        <input id="to" placeholder="recipient 0x… (defaults to you)">
+        <div style="display:flex;gap:8px"><button class="alt" id="connect" type="button">Connect wallet</button><button id="go" type="button" disabled>Send</button></div>
+        <div id="msg" class="mut"></div>
+      </form>
+    </div>
+  </div>
+  <div class="card"><h2>Transfers</h2><div style="overflow-x:auto"><table><thead><tr><th>When</th><th>Route</th><th>Amount</th><th>Recipient</th><th>Source tx</th><th>Delivery</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table></div></div>
+</main>
+<footer>Read straight from public RPCs (<span class="mono">test-evm-rpc-v3.portaldot.dev</span>, <span class="mono">rpc.test.mezo.org</span>) in your browser; no backend. Source: <a href="https://github.com/XachP/portallink">github.com/XachP/portallink</a> · MIT · testnet only.</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js" crossorigin="anonymous"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
