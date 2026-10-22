@@ -1,0 +1,23 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.24"
+evm_version = "shanghai"   # pallet-revive and Mezo both accept shanghai bytecode
+optimizer = true
+optimizer_runs = 200
+bytecode_hash = "none"     # keep code small: revive charges a storage deposit per byte
+cbor_metadata = false
+fs_permissions = [{ access = "read-write", path = "./deploy" }]
+
+[fuzz]
+runs = 512
+
+[invariant]
+runs = 128
+fail_on_revert = true
+depth = 64
+
+[rpc_endpoints]
+portaldot_testnet = "https://test-evm-rpc-v3.portaldot.dev"
+mezo_testnet = "https://rpc.test.mezo.org"
